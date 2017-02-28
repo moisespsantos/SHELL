@@ -1,0 +1,21 @@
+## -- VALIDANDO USUARIO ROOT --##
+USUARIO=$(whoami)
+if [ "${USUARIO}" != root ]; then
+    echo "#-------------------------------------------------------------#"
+    echo "# 	ESTE SCRIPT PRECISA SER EXECUTADO COM USUARIO ROOT  	#"
+    echo "#-------------------------------------------------------------#"
+    exit
+fi
+ 
+INICIAL(){
+echo "-------------------------------------------------------"
+echo "    FAZENDO BACKUP DO ARQUIVO PADRAO. . ."
+cp -Rfa /etc/sysconfig/network{,.bkp}
+echo -n "    DIGITE O NOME DESEJADO PARA O SERVIDOR: "
+read nomemaquina
+ 
+cat << EOF > /etc/sysconfig/network
+NETWORKING=yes
+NETWORKING_IPV6=no
+HOSTNAME=$nomemaquina
+EOF
